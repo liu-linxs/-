@@ -1,0 +1,46 @@
+import requests
+import hashlib
+from lxml import etree
+from urllib.parse import  unquote #解码
+from urllib.parse import  quote #编码
+R=requests.session()
+index_url='http://jwk.njfu.edu.cn/_data/login_home.aspx'
+login_url='http://jwk.njfu.edu.cn/_data/login_home.aspx'
+uname='170509211'
+upsw='785632763'
+headers={}
+headers['origin']='http://jwk.njfu.edu.cn'
+
+headers['user-agent']='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36'
+headers['cookie']='''iPlanetDirectoryPro=aDuMjhNaQQNq4edL2Sjcgd; myCookie=; ASP.NET_SessionId=qse4thmezvx1es2p3ag5gpln'''
+resp=R.get(index_url,headers=headers)
+
+html=etree.HTML(resp.text)
+data_info=html.xpath('//input/@value')
+
+params={
+'__VIEWSTATE':data_info[0],
+'__VIEWSTATEGENERATOR':data_info[1],
+'__EVENTVALIDATION':data_info[2],
+'pcInfo':"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36undefined5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36 SN:NULL",
+'txt_mm_expression':'',
+'txt_mm_length':'',
+'txt_mm_userzh':'',
+'typeName':'学生',
+'dsdsdsdsdxcxdfgfg':hashlib.md5(('170509211'+hashlib.md5(upsw.upper().encode(
+    'utf-8')).hexdigest()[:30].upper()+'10298').encode('utf-8')).hexdigest()[
+                    :30].upper(),
+'fgfggfdgtyuuyyuuckjg':'',
+'validcodestate':'0',
+'Sel_Type':'STU',
+"txt_asmcdefsddsd":uname,
+'txt_pewerwedsdfsdff':'',
+'txt_psasas':'请输入密码',
+}
+headers = {'content-type': 'charset=gbk'}
+
+headers={'Content-Type':'application/x-www-form-urlencoded',
+'Accept':'''text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9''',
+'Referer':'http://jwk.njfu.edu.cn/_data/login_home.aspx'}
+response=R.post(login_url,headers=headers,data=params)
+
