@@ -6,8 +6,8 @@ from urllib.parse import  quote #编码
 R=requests.session()
 index_url='http://jwk.njfu.edu.cn/_data/login_home.aspx'
 login_url='http://jwk.njfu.edu.cn/_data/login_home.aspx'
-uname='170509211'
-upsw='785632763'
+uname='' #用户名
+upsw='' #密码
 headers={}
 headers['origin']='http://jwk.njfu.edu.cn'
 
